@@ -6,6 +6,21 @@ angular.module('weddingFullstackApp')
       'title': 'Home',
       'link': '/'
     }, {
+      'title': 'RSVP',
+      'link': '/rsvp'
+    }, {
+      'title': 'Information',
+      'link': '/info'
+    }, {
+      'title': 'Travel',
+      'link': '/travel'
+    }, {
+      'title': 'Photos',
+      'link': '/photos'
+    }, {
+      'title': 'Contact',
+      'link': '/contact'
+    }, {
       'title': 'Settings',
       'link': '/settings'
     }];

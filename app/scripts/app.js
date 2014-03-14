@@ -25,6 +25,26 @@ angular.module('weddingFullstackApp', [
         controller: 'SettingsCtrl',
         authenticate: true
       })
+      .when('/rsvp', {
+        templateUrl: 'views/rsvp.html',
+        controller: 'RsvpCtrl'
+      })
+      .when('/info', {
+        templateUrl: 'views/info.html',
+        controller: 'InfoCtrl'
+      })
+      .when('/travel', {
+        templateUrl: 'views/travel.html',
+        controller: 'TravelCtrl'
+      })
+      .when('/photos', {
+        templateUrl: 'views/photos.html',
+        controller: 'PhotosCtrl'
+      })
+      .when('/contact', {
+        templateUrl: 'views/contact.html',
+        controller: 'ContactCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

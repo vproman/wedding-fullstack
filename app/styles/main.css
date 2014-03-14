@@ -21,7 +21,7 @@ body {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 40px;
-  padding-bottom: 19px;
+  padding-bottom: 10px;
 }
 
 /* Custom page footer */
@@ -58,6 +58,18 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
+
+.nav-center {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-nav {
+  padding-bottom: 10px;
+}
+
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
