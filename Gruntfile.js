@@ -30,8 +30,11 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
+          cmd: process.argv[0],
           script: 'server.js',
+          node_env: 'development',
           debug: true
+
         }
       },
       prod: {

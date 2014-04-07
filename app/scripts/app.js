@@ -27,7 +27,8 @@ angular.module('weddingFullstackApp', [
       })
       .when('/rsvp', {
         templateUrl: 'views/rsvp.html',
-        controller: 'RsvpCtrl'
+        controller: 'RsvpCtrl',
+        authenticate: true
       })
       .when('/info', {
         templateUrl: 'views/info.html',
