@@ -29,8 +29,9 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 // Populate empty DB with sample data
 require('./lib/config/dummydata');
   
-// Passport Configuration
-var passport = require('./lib/config/passport');
+process.env.FACEBOOK_APP_ID = '628962753842703';
+process.env.FACEBOOK_APP_SECRET = '8e975c1a56efce320ac8f3d3e7c9870f';
+
 
 var app = express();
 
