@@ -26,24 +26,24 @@ angular.module('weddingFullstackApp', [
         authenticate: true
       })
       .when('/rsvp', {
-        templateUrl: 'views/rsvp.html',
+        templateUrl: 'partials/rsvp',
         controller: 'RsvpCtrl',
         authenticate: true
       })
       .when('/info', {
-        templateUrl: 'views/info.html',
+        templateUrl: 'partials/info',
         controller: 'InfoCtrl'
       })
       .when('/travel', {
-        templateUrl: 'views/travel.html',
+        templateUrl: 'partials/travel',
         controller: 'TravelCtrl'
       })
       .when('/photos', {
-        templateUrl: 'views/photos.html',
+        templateUrl: 'partials/photos',
         controller: 'PhotosCtrl'
       })
       .when('/contact', {
-        templateUrl: 'views/contact.html',
+        templateUrl: 'partials/contact',
         controller: 'ContactCtrl'
       })
       .otherwise({

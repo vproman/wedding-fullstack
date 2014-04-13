@@ -6,10 +6,14 @@ describe('Controller: InfoCtrl', function () {
   beforeEach(module('weddingFullstackApp'));
 
   var InfoCtrl,
-    scope;
+    scope,
+    $httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
+    $httpBackend = _$httpBackend_;
+    $httpBackend.expectGET('/api/awesomeThings')
+      .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
     scope = $rootScope.$new();
     InfoCtrl = $controller('InfoCtrl', {
       $scope: scope
@@ -17,6 +21,8 @@ describe('Controller: InfoCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+    expect(scope.awesomeThings).toBeUndefined();
+    $httpBackend.flush();
+    expect(scope.awesomeThings.length).toBe(4);
   });
 });

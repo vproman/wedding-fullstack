@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('weddingFullstackApp')
-  .controller('PhotosCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('PhotosCtrl', function ($scope, $http) {
+    $http.get('/api/awesomeThings').success(function(awesomeThings) {
+      $scope.awesomeThings = awesomeThings;
+    });
   });
