@@ -1,44 +1,114 @@
-<div ng-controller="Controller">
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title">Please RSVP using the cards that came with your invitation!</h3>
+    </div>
+    <div class="panel-body">
+        We have sent out both "save the date" cards and invitations.  Along with your invitation, you should have
+        received an RSVP card with a pre-stamped and pre-addressed envelope.  Please fill out the RSVP card and use
+        the envelope to mail the RSVP card back to us.
+
+        While RSVP by mail is preferred, you can also RSVP via facebook, by text message or phone at (619) 663-8527
+        or via the form below.
+    </div>
+</div>
+
+<div ng-controller="RsvpController as rsvp">
 	<form novalidate="" class="css-form">
-		<div class="container">
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-8">
-					    <div class="input-group">
-				  			<span class="input-group-addon">Your Name</span>
-							<input ng-model="yourName" type="text" class="form-control">
-					    </div><!-- /input-group -->
-					</div>
-					<div class="col-md-4">
- 						<div class="dropdown" ng-controller="DropdownCtrl">
-							<a class="dropdown-toggle">Your RSVP <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li ng-repeat="option in options"><a>{{ o.text }}</a></li>
-							</ul>
-						</div><!-- /btn-group -->
-						<select ng-model="yourRSVP" ng-options="o.text for o in rsvpOptions">
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-offset-8 col-md-4">
-						<button type="submit" class="btn btn-default" data-ng-click="copy(this)">Save Your RSVP</button>
-					</div>
-				</div>
-			</div>
-		</div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group" data-ng-controller="DropdownCtrl as receivedRsvp">
+                                    <span class="input-group-addon">Did you receive a paper invite?</span>
+                                    <div class="input-group-btn" dropdown="" is-open="status.isopen">
+                                        <button type="button" class="btn btn-default dropdown-toggle">
+                                            {{ viewModel.receivedPaperInvite.text }} <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li data-ng-repeat="o in viewModel.yesNoOptions" data-ng-click="toggleDropdown($event, viewModel.receivedPaperInvite, o)"><a href="#">{{ o.text }}</a></li>
+                                        </ul>
+                                    </div><!-- /btn-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group" data-ng-controller="DropdownCtrl as returnedRsvp">
+                                    <span class="input-group-addon">Did you return the RSVP card that came with your paper invite?</span>
+                                    <div class="input-group-btn" dropdown="" is-open="status.isopen">
+                                        <button type="button" class="btn btn-default dropdown-toggle">
+                                            {{ viewModel.returnedPaperInvite.text }} <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li data-ng-repeat="o in viewModel.yesNoOptions" data-ng-click="toggleDropdown($event, viewModel.returnedPaperInvite, o)"><a href="#">{{ o.text }}</a></li>
+                                        </ul>
+                                    </div><!-- /btn-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Your Name</span>
+                                    <input ng-model="viewModel.yourName" type="text" class="form-control">
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="col-sm-4">
+                                <div ng-controller="DropdownCtrl as yourRSVP">
+                                    <div class="btn-group" dropdown="" is-open="status.isopen">
+                                        <button type="button" class="btn btn-primary dropdown-toggle">
+                                            {{ viewModel.yourRsvp.text }} <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li ng-repeat="o in viewModel.yourRsvpOptions"><a href="" ng-click="toggleDropdown($event, viewModel.yourRsvp, o)">{{ o.text }}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div data-ng-show="viewModel.showNumberAttending" class="input-group">
+                                    <span class="input-group-addon">Number Attending</span>
+                                    <input type="number" class="form-control" ng-model="viewModel.numberAttending">
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-4 col-sm-4">
+                                <button type="submit" class="btn btn-default" data-ng-click="viewModel.save()">Save Your RSVP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 	</form>
 </div>
 
 <script>
-  function Controller($scope) {
-    $scope.master = { yourRSVP : 'Your RSVP'};
- 	$scope.yourRSVP = { text : 'Your RSVP', value : null };
- 	$scope.rsvpOptions = [
- 		{ text : 'Will Attend', value : true },
- 		{ text : 'Will Not Attend', value : false }];
+  function DropdownCtrl($scope) {
+      $scope.status = {
+          isopen: false
+      };
+
+      $scope.toggled = function(open) {
+          console.log('Dropdown is now: ', open);
+      };
+
+      $scope.toggleDropdown = function($event, model, selOption) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          model.value = selOption.value;
+          $scope.status.isopen = !$scope.status.isopen;
+      }
+  }
+  function RsvpController($scope) {
+    $scope.viewModel = rsvpViewModel($scope.model);
 
     $scope.update = function(rsvp) {
       $scope.master = angular.copy(rsvp);
@@ -49,9 +119,97 @@
     };
 
     $scope.selectVal = function(attending) {
-    	$scope.yourRSVP.$modelValue={ text : 'Will Attend', value : true };
     };
  
     $scope.reset();
   }
+
+    function rsvpViewModel(rsvpModel)
+    {
+        var yourRsvpSelections = [
+            { text : "Your RSVP", value : null },
+            { text : 'Accepts With Pleasure', value : true },
+            { text : 'Declines With Regret', value : false }];
+
+        var yourRsvpOptions = [
+            { text : 'Accepts With Pleasure', value : true },
+            { text : 'Declines With Regret', value : false }];
+
+        var yesNoSelections = [
+            { text : "Please Select", value : null },
+            { text : "Yes" , value : true },
+            { text : "No", value : false }
+        ];
+
+        var yesNoOptions = [
+            { text : "Yes" , value : true },
+            { text : "No", value : false }
+        ];
+
+        var text = function(value, options) {
+            for(var i = 0; i < options.length; i++) {
+                if(options[i].value === value) {
+                    return options[i].text;
+                }
+            }
+        }
+
+        var yourRsvpText = function() {
+            return text(rsvpModel.yourRsvp, yourRsvpSelections);
+        }
+        var receivedPaperInviteText = function()
+        {
+            return text(rsvpModel.receivedPaperInvite, yesNoSelections);
+        }
+        var returnedPaperInviteText = function() {
+            return text(rsvpModel.returnedPaperInvite, yesNoSelections);
+        }
+
+        var that = {
+            get numberAttending() {
+                return rsvpModel.numberAttending;
+            },
+            set numberAttending(value) {
+                rsvpModel.numberAttending = value;
+            },
+            get yourName() { return rsvpModel.yourName; },
+            set yourName(value) { rsvpModel.yourName = value; }
+        };
+
+        that.yourRsvpOptions = yourRsvpOptions;
+        that.yesNoOptions = yesNoOptions;
+
+        that.receivedPaperInvite = {
+            get text () { return receivedPaperInviteText(); },
+            get value () { return rsvpModel.receivedPaperInvite; },
+            set value (value) { return rsvpModel.receivedPaperInvite = value; }
+        };
+        that.returnedPaperInvite = {
+            get text () { return returnedPaperInviteText(); },
+            get value () { return rsvpModel.returnedPaperInvite; },
+            set value (value) { rsvpModel.returnedPaperInvite = value; }
+        };
+
+        that.numberAttending = 0;
+        that.yourRsvp = {
+            get text () { return yourRsvpText(); },
+            get value () { return rsvpModel.yourRsvp; },
+            set value (value) {
+                rsvpModel.yourRsvp = value;
+                if(rsvpModel.yourRsvp) {
+                    that.numberAttending = 1;
+                }
+                else {
+                    that.numberAttending = 0;
+                }
+            }
+        };
+
+        Object.defineProperty(that, "showNumberAttending",
+                { get : function() { return that.yourRsvp.value == true; } });
+
+        that.save = function() { rsvpModel.$save(); }
+        return that;
+    }
+
 </script>
