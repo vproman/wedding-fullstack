@@ -12,6 +12,9 @@ var express = require('express'),
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+// For backwards compat
+process.env.MONGODOMAIN = process.env.MONGODOMAIN || 'localhost';
+
 // Application Config
 var config = require('./lib/config/config');
 
